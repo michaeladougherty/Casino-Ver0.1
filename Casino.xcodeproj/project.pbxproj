@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		25655B9F297C4F8300910928 /* Herborn.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25655B9E297C4F8200910928 /* Herborn.ttf */; };
+		25655BA1297C512400910928 /* Georgia.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25655BA0297C512400910928 /* Georgia.ttf */; };
+		25655BA3297C5C8B00910928 /* Cochin.ttc in Resources */ = {isa = PBXBuildFile; fileRef = 25655BA2297C5C8B00910928 /* Cochin.ttc */; };
+		25655BA5297DD46200910928 /* CasinoTitle.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 25655BA4297DD46100910928 /* CasinoTitle.mp3 */; };
 		2578E4502964A70400A493FE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2578E44F2964A70400A493FE /* AppDelegate.swift */; };
 		2578E4522964A70400A493FE /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2578E4512964A70400A493FE /* GameScene.sks */; };
 		2578E4542964A70400A493FE /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2578E4532964A70400A493FE /* Actions.sks */; };
@@ -18,6 +22,14 @@
 		2578E46A2964A70700A493FE /* CasinoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2578E4692964A70700A493FE /* CasinoTests.swift */; };
 		2578E4742964A70700A493FE /* CasinoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2578E4732964A70700A493FE /* CasinoUITests.swift */; };
 		2578E4762964A70700A493FE /* CasinoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2578E4752964A70700A493FE /* CasinoUITestsLaunchTests.swift */; };
+		2578E4832964AA3D00A493FE /* GameMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2578E4822964AA3D00A493FE /* GameMenu.swift */; };
+		2578E4852964AAD900A493FE /* GameMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2578E4842964AAD900A493FE /* GameMenu.sks */; };
+		2578E4872964B5DE00A493FE /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2578E4862964B5DE00A493FE /* Colors.swift */; };
+		2578E4892967187500A493FE /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2578E4882967187500A493FE /* Card.swift */; };
+		2578E48B297874BC00A493FE /* BlackjackGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2578E48A297874BC00A493FE /* BlackjackGame.swift */; };
+		2578E48D297874D400A493FE /* BlackjackGame.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2578E48C297874D400A493FE /* BlackjackGame.sks */; };
+		2578E4912979C39700A493FE /* BlackjackMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2578E4902979C39700A493FE /* BlackjackMenu.sks */; };
+		25C0FF182980595500176CB8 /* flipcard.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 25C0FF172980595500176CB8 /* flipcard.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +50,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		25655B9D297C4E3300910928 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		25655B9E297C4F8200910928 /* Herborn.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Herborn.ttf; sourceTree = "<group>"; };
+		25655BA0297C512400910928 /* Georgia.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Georgia.ttf; sourceTree = "<group>"; };
+		25655BA2297C5C8B00910928 /* Cochin.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = Cochin.ttc; sourceTree = "<group>"; };
+		25655BA4297DD46100910928 /* CasinoTitle.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CasinoTitle.mp3; sourceTree = "<group>"; };
 		2578E44C2964A70400A493FE /* Casino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Casino.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2578E44F2964A70400A493FE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2578E4512964A70400A493FE /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -52,6 +69,14 @@
 		2578E46F2964A70700A493FE /* CasinoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CasinoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2578E4732964A70700A493FE /* CasinoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasinoUITests.swift; sourceTree = "<group>"; };
 		2578E4752964A70700A493FE /* CasinoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CasinoUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2578E4822964AA3D00A493FE /* GameMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameMenu.swift; sourceTree = "<group>"; };
+		2578E4842964AAD900A493FE /* GameMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameMenu.sks; sourceTree = "<group>"; };
+		2578E4862964B5DE00A493FE /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		2578E4882967187500A493FE /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		2578E48A297874BC00A493FE /* BlackjackGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackjackGame.swift; sourceTree = "<group>"; };
+		2578E48C297874D400A493FE /* BlackjackGame.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BlackjackGame.sks; sourceTree = "<group>"; };
+		2578E4902979C39700A493FE /* BlackjackMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BlackjackMenu.sks; sourceTree = "<group>"; };
+		25C0FF172980595500176CB8 /* flipcard.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = flipcard.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,10 +127,22 @@
 		2578E44E2964A70400A493FE /* Casino */ = {
 			isa = PBXGroup;
 			children = (
+				25655B9D297C4E3300910928 /* Info.plist */,
+				25C0FF19298831CD00176CB8 /* Sounds */,
+				25655BA2297C5C8B00910928 /* Cochin.ttc */,
+				25655B9E297C4F8200910928 /* Herborn.ttf */,
+				25655BA0297C512400910928 /* Georgia.ttf */,
+				2578E4862964B5DE00A493FE /* Colors.swift */,
+				2578E4882967187500A493FE /* Card.swift */,
 				2578E44F2964A70400A493FE /* AppDelegate.swift */,
-				2578E4512964A70400A493FE /* GameScene.sks */,
 				2578E4532964A70400A493FE /* Actions.sks */,
 				2578E4552964A70400A493FE /* GameScene.swift */,
+				2578E4822964AA3D00A493FE /* GameMenu.swift */,
+				2578E48A297874BC00A493FE /* BlackjackGame.swift */,
+				2578E4512964A70400A493FE /* GameScene.sks */,
+				2578E4902979C39700A493FE /* BlackjackMenu.sks */,
+				2578E48C297874D400A493FE /* BlackjackGame.sks */,
+				2578E4842964AAD900A493FE /* GameMenu.sks */,
 				2578E4572964A70400A493FE /* GameViewController.swift */,
 				2578E4592964A70400A493FE /* Main.storyboard */,
 				2578E45C2964A70600A493FE /* Assets.xcassets */,
@@ -129,6 +166,15 @@
 				2578E4752964A70700A493FE /* CasinoUITestsLaunchTests.swift */,
 			);
 			path = CasinoUITests;
+			sourceTree = "<group>";
+		};
+		25C0FF19298831CD00176CB8 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				25C0FF172980595500176CB8 /* flipcard.mp3 */,
+				25655BA4297DD46100910928 /* CasinoTitle.mp3 */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -235,11 +281,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25655BA5297DD46200910928 /* CasinoTitle.mp3 in Resources */,
 				2578E45B2964A70400A493FE /* Main.storyboard in Resources */,
 				2578E4522964A70400A493FE /* GameScene.sks in Resources */,
+				25655BA3297C5C8B00910928 /* Cochin.ttc in Resources */,
 				2578E45D2964A70600A493FE /* Assets.xcassets in Resources */,
+				25C0FF182980595500176CB8 /* flipcard.mp3 in Resources */,
+				2578E4912979C39700A493FE /* BlackjackMenu.sks in Resources */,
+				25655B9F297C4F8300910928 /* Herborn.ttf in Resources */,
 				2578E4602964A70600A493FE /* LaunchScreen.storyboard in Resources */,
+				2578E48D297874D400A493FE /* BlackjackGame.sks in Resources */,
+				2578E4852964AAD900A493FE /* GameMenu.sks in Resources */,
 				2578E4542964A70400A493FE /* Actions.sks in Resources */,
+				25655BA1297C512400910928 /* Georgia.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,9 +318,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2578E4832964AA3D00A493FE /* GameMenu.swift in Sources */,
+				2578E4892967187500A493FE /* Card.swift in Sources */,
+				2578E4872964B5DE00A493FE /* Colors.swift in Sources */,
 				2578E4562964A70400A493FE /* GameScene.swift in Sources */,
 				2578E4582964A70400A493FE /* GameViewController.swift in Sources */,
 				2578E4502964A70400A493FE /* AppDelegate.swift in Sources */,
+				2578E48B297874BC00A493FE /* BlackjackGame.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,6 +503,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4KC7SRR2YC;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Casino/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -473,6 +532,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 4KC7SRR2YC;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Casino/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
