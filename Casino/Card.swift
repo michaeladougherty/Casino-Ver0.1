@@ -8,20 +8,20 @@
 import SpriteKit
 
 enum CardType :Int {
-  case ace,
-    king,
-    queen,
-    jester,
-    ten,
-    nine,
-    eight,
-    seven,
-    six,
-    five,
-    four,
-    three,
-    two,
-    joker
+  case joker,
+       ace,
+       two,
+       three,
+       four,
+       five,
+       six,
+       seven,
+       eight,
+       nine,
+       ten,
+       jester,
+       queen,
+       king
 }
 
 enum CardSuit :Int{
@@ -32,8 +32,8 @@ enum CardSuit :Int{
 }
 
 enum CardBack :Int{
-    case black,
-    white,
+    case white,
+    black,
     blue,
     green,
     red,
@@ -109,7 +109,7 @@ class Card : SKSpriteNode {
     let cardBack :CardBack
     var cardNum = -1
     var cardSuitNum = -1
-    var faceUp = true
+    var faceUp = false
     let frontTexture :SKTexture
     let backTexture :SKTexture
     let cardArray: [[String]] = [["jokerDefualt1", "heartAce", "heartTwo", "heartThree", "heartFour", "heartFive", "heartSix", "heartSeven", "heartEight", "heartNine", "heartTen", "heartJester", "heartQueen", "heartKing"],
@@ -195,7 +195,7 @@ class Card : SKSpriteNode {
     var card = cardArray[cardSuitNum][cardNum] // Getting card value based of numbers changed through the cases
     frontTexture = SKTexture(imageNamed: card) // Setting Card Value
     
-        super.init(texture: frontTexture, color: .clear, size: frontTexture.size())
+        super.init(texture: backTexture, color: .clear, size: backTexture.size())
   }
 }
 

@@ -33,6 +33,7 @@ class GameScene: SKScene {
         if coins < 50
         {
             coins = 50
+            saveToUserDefaults()
         }
         
         run(SKAction.sequence([
@@ -43,6 +44,7 @@ class GameScene: SKScene {
                 SKAction.wait(forDuration: 3.0),
                 SKAction.run(createStartButton)
                 ]))
+        
     }
     
     
@@ -67,7 +69,7 @@ class GameScene: SKScene {
         let card2 = randomCard()
         card2.position = CGPoint(x: frame.width/1.5, y: frame.height/0.5)
         card2.size = CGSize(width: frame.width/4, height: frame.height/5.5) // Ratio of cards is 8 Width and 11 Height
-        
+
         card2.physicsBody = SKPhysicsBody(rectangleOf: card2.frame.size)
         card2.physicsBody?.allowsRotation = false
         card2.physicsBody?.friction = 0
@@ -143,14 +145,21 @@ class GameScene: SKScene {
         addChild(title)
         
         coinLabel = SKLabelNode(text: "\(coins)")
-        coinLabel.fontName = "Cochin"
+        coinLabel.fontName = "absender"
         coinLabel.fontSize = CGFloat(frame.width/12)
-        coinLabel.position = CGPoint(x: frame.width/1.8, y: frame.height/1.35)
+        coinLabel.position = CGPoint(x: frame.width/2, y: frame.height/1.4-50)
         addChild(coinLabel)
         
-        coinImage = SKSpriteNode(imageNamed: "coin")
+        
+        var gifTextures: [SKTexture] = [];
+
+            for i in 1...9 {
+                gifTextures.append(SKTexture(imageNamed: "coinFrame\(i)"));
+            }
+        
         coinImage.size = CGSize(width: frame.width/10, height: frame.width/10)
-        coinImage.position = CGPoint(x: frame.width/2.2, y: frame.height/1.32)
+        coinImage.position = CGPoint(x: frame.width/2, y: frame.height/1.4+50)
+        coinImage.run(SKAction.repeatForever(SKAction.animate(with: gifTextures, timePerFrame: 0.075)))
         addChild(coinImage)
     }
 
@@ -262,7 +271,7 @@ class GameScene: SKScene {
         {
             randomSuit = Int.random(in: 0...3)
             randomValue = Int.random(in: 1...13)
-            
+
             let stringCard = "\(randomSuit)\(randomValue)"
             let intCard = Int(stringCard) ?? 00
             print(cardsUsed)
@@ -275,184 +284,7 @@ class GameScene: SKScene {
                 cardsUsed.append(intCard)
             }
         }
-        var card = Card(cardType: .eight, cardSuit: .heart, cardBack: .white)
-        if randomSuit == 0
-        {
-            if randomValue == 1
-            {
-                card = Card(cardType: .ace, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 2
-            {
-                card = Card(cardType: .two, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 3
-            {
-                card = Card(cardType: .three, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 4
-            {
-                card = Card(cardType: .four, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 5
-            {
-                card = Card(cardType: .five, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 6
-            {
-                card = Card(cardType: .six, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 7
-            {
-                card = Card(cardType: .seven, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 8
-            {
-                card = Card(cardType: .eight, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 9
-            {
-                card = Card(cardType: .nine, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 10
-            {
-                card = Card(cardType: .ten, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 11
-            {
-                card = Card(cardType: .jester, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 12
-            {
-                card = Card(cardType: .queen, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 13
-            {
-                card = Card(cardType: .king, cardSuit: .heart, cardBack: .white)
-            }
-        }
-        
-        else if randomSuit == 1
-        {
-            if randomValue == 1
-            {
-                card = Card(cardType: .ace, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 2
-            {
-                card = Card(cardType: .two, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 3
-            {
-                card = Card(cardType: .three, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 4
-            {
-                card = Card(cardType: .four, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 5
-            {
-                card = Card(cardType: .five, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 6
-            {
-                card = Card(cardType: .six, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 7
-            {
-                card = Card(cardType: .seven, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 8
-            {
-                card = Card(cardType: .eight, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 9
-            {
-                card = Card(cardType: .nine, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 10
-            {
-                card = Card(cardType: .ten, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 11
-            {
-                card = Card(cardType: .jester, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 12
-            {
-                card = Card(cardType: .queen, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 13
-            {
-                card = Card(cardType: .king, cardSuit: .diamond, cardBack: .white)
-            }
-        }
-        
-        else if randomSuit == 2
-        {
-            if randomValue == 1
-            {
-                card = Card(cardType: .ace, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 2
-            {
-                card = Card(cardType: .two, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 3
-            {
-                card = Card(cardType: .three, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 4
-            {
-                card = Card(cardType: .four, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 5
-            {
-                card = Card(cardType: .five, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 6
-            {
-                card = Card(cardType: .six, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 7
-            {
-                card = Card(cardType: .seven, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 8
-            {
-                card = Card(cardType: .eight, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 9
-            {
-                card = Card(cardType: .nine, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 10
-            {
-                card = Card(cardType: .ten, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 11
-            {
-                card = Card(cardType: .jester, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 12
-            {
-                card = Card(cardType: .queen, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 13
-            {
-                card = Card(cardType: .king, cardSuit: .spade, cardBack: .white)
-            }
-        }
-        
-        else if randomSuit == 3
-        {
-            if randomValue == 1
-            {
-                card = Card(cardType: .ace, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 2
-            {
-                card = Card(cardType: .two, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 3
-            {
-                card = Card(cardType: .three, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 4
-            {
-                card = Card(cardType: .four, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 5
-            {
-                card = Card(cardType: .five, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 6
-            {
-                card = Card(cardType: .six, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 7
-            {
-                card = Card(cardType: .seven, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 8
-            {
-                card = Card(cardType: .eight, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 9
-            {
-                card = Card(cardType: .nine, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 10
-            {
-                card = Card(cardType: .ten, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 11
-            {
-                card = Card(cardType: .jester, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 12
-            {
-                card = Card(cardType: .queen, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 13
-            {
-                card = Card(cardType: .king, cardSuit: .club, cardBack: .white)
-            }
-
-        }
+        var card = Card(cardType: CardType(rawValue: randomValue)!, cardSuit: CardSuit(rawValue: randomSuit)!, cardBack: CardBack(rawValue: 0)!)
         return card
     }
-
-    }
+}

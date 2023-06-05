@@ -30,6 +30,7 @@
 		2578E48D297874D400A493FE /* BlackjackGame.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2578E48C297874D400A493FE /* BlackjackGame.sks */; };
 		2578E4912979C39700A493FE /* BlackjackMenu.sks in Resources */ = {isa = PBXBuildFile; fileRef = 2578E4902979C39700A493FE /* BlackjackMenu.sks */; };
 		25C0FF182980595500176CB8 /* flipcard.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 25C0FF172980595500176CB8 /* flipcard.mp3 */; };
+		25EAF10129A3084000EFBE8C /* absender1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 25EAF10029A3084000EFBE8C /* absender1.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		2578E48C297874D400A493FE /* BlackjackGame.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BlackjackGame.sks; sourceTree = "<group>"; };
 		2578E4902979C39700A493FE /* BlackjackMenu.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = BlackjackMenu.sks; sourceTree = "<group>"; };
 		25C0FF172980595500176CB8 /* flipcard.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = flipcard.mp3; sourceTree = "<group>"; };
+		25EAF10029A3084000EFBE8C /* absender1.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = absender1.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,9 +131,7 @@
 			children = (
 				25655B9D297C4E3300910928 /* Info.plist */,
 				25C0FF19298831CD00176CB8 /* Sounds */,
-				25655BA2297C5C8B00910928 /* Cochin.ttc */,
-				25655B9E297C4F8200910928 /* Herborn.ttf */,
-				25655BA0297C512400910928 /* Georgia.ttf */,
+				25EAF0FF29A3082100EFBE8C /* Fonts */,
 				2578E4862964B5DE00A493FE /* Colors.swift */,
 				2578E4882967187500A493FE /* Card.swift */,
 				2578E44F2964A70400A493FE /* AppDelegate.swift */,
@@ -175,6 +175,17 @@
 				25655BA4297DD46100910928 /* CasinoTitle.mp3 */,
 			);
 			path = Sounds;
+			sourceTree = "<group>";
+		};
+		25EAF0FF29A3082100EFBE8C /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				25655B9E297C4F8200910928 /* Herborn.ttf */,
+				25655BA0297C512400910928 /* Georgia.ttf */,
+				25655BA2297C5C8B00910928 /* Cochin.ttc */,
+				25EAF10029A3084000EFBE8C /* absender1.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -289,6 +300,7 @@
 				25C0FF182980595500176CB8 /* flipcard.mp3 in Resources */,
 				2578E4912979C39700A493FE /* BlackjackMenu.sks in Resources */,
 				25655B9F297C4F8300910928 /* Herborn.ttf in Resources */,
+				25EAF10129A3084000EFBE8C /* absender1.ttf in Resources */,
 				2578E4602964A70600A493FE /* LaunchScreen.storyboard in Resources */,
 				2578E48D297874D400A493FE /* BlackjackGame.sks in Resources */,
 				2578E4852964AAD900A493FE /* GameMenu.sks in Resources */,

@@ -55,7 +55,19 @@ class BlackjackGame: SKScene
     var bettingChip100 = SKSpriteNode()
     var bettingChip250 = SKSpriteNode()
     var bettingChip500 = SKSpriteNode()
-    var bettingChip1000 = SKSpriteNode()
+    var betButtonBackground = SKShapeNode()
+    var betButtonText = SKLabelNode()
+    var betBackground = SKSpriteNode()
+    var coinImage = SKSpriteNode()
+    var coinBalanceLabel = SKLabelNode()
+    var bettingX = 150.0
+    var chipPositionY = 25.0
+    var chipPositionX = 0.0
+    var chipPositionZ = 23.0
+    var betValue = 0
+    var cancelButtonText = SKLabelNode()
+    var cancelButtonBackground = SKShapeNode()
+    var copiedNodes:[SKSpriteNode] = [SKSpriteNode]()
 
     
     //Card Values/Nodes
@@ -70,34 +82,193 @@ class BlackjackGame: SKScene
     override func didMove(to view: SKView) {
         loadFromUserDefaults()
         
-        self.backgroundColor = SKColor.tablwGreen
+        self.backgroundColor = SKColor.tableGreen
         createBetScreen()
+
         run(SKAction.sequence([
-            SKAction.run(createBackground),
-            SKAction.run(dealerStartingDraw),
-            SKAction.wait(forDuration: 1.5),
-            SKAction.run(playerDraws),
-            SKAction.wait(forDuration: 1.5),
-            SKAction.run(dealerDraws),
-            SKAction.wait(forDuration: 1.5),
-            SKAction.run(playerDraws),
-            SKAction.run(playerCheck)
+//            SKAction.run(createBackground),
+//            SKAction.run(dealerStartingDraw),
+//            SKAction.wait(forDuration: 1.5),
+//            SKAction.run(playerDraws),
+//            SKAction.wait(forDuration: 1.5),
+//            SKAction.run(dealerDraws),
+//            SKAction.wait(forDuration: 1.5),
+//            SKAction.run(playerDraws),
+//            SKAction.run(playerCheck)
             ]))
     }
     
     
     func createBetScreen()
     {
-        bottomBar = SKShapeNode(rectOf: CGSize(width: frame.width, height: frame.height/1.5))
-        bottomBar.position = CGPoint(x: frame.width/2, y: frame.height/4)
-        bottomBar.fillColor = UIColor.tableBrown
+        betValue = 0
+        
+        bottomBar = SKShapeNode(rectOf: CGSize(width: frame.width, height: frame.height/2.1))
+        bottomBar.position = CGPoint(x: frame.width/2, y: frame.height/4.25)
+        bottomBar.fillColor = UIColor.bettingScreenBackground
         bottomBar.strokeColor = UIColor.black
+        bottomBar.zPosition = 15
         addChild(bottomBar)
+        
+        betBackground = SKSpriteNode(imageNamed: "betBackground")
+        betBackground.anchorPoint = CGPoint(x: 0, y: 0)
+        betBackground.position = CGPoint(x: 0, y: 0)
+        betBackground.size = CGSize(width: frame.width, height: frame.height)
+        betBackground.zPosition = 0
+        addChild(betBackground)
+
+        
+        betButtonBackground = SKShapeNode(rectOf: CGSize(width: frame.width/3, height: frame.height/10), cornerRadius: CGFloat(10))
+        betButtonBackground.position = CGPoint(x: frame.width/2, y: frame.height/9.5)  //Middle of Screen
+        betButtonBackground.glowWidth = 1.0
+        betButtonBackground.fillColor = SKColor.tableBrown
+        betButtonBackground.strokeColor = SKColor.bettingScreenBackground
+        betButtonBackground.name = "betButton"
+        betButtonBackground.zPosition = 15
+        addChild(betButtonBackground)
+        
+        betButtonText = SKLabelNode(text: "Bet")
+        betButtonText.fontName = "Herborn"
+        betButtonText.fontSize = CGFloat(frame.width/12)
+        betButtonText.position = CGPoint(x: frame.width/2, y: frame.height/11)
+        betButtonText.name = "betButton"
+        betButtonText.zPosition = 20
+        addChild(betButtonText)
+        
+        
+        cancelButtonBackground = SKShapeNode(rectOf: CGSize(width: frame.width/5, height: frame.height/16), cornerRadius: CGFloat(10))
+        cancelButtonBackground.position = CGPoint(x: frame.width/1.25, y: frame.height/1.1)
+        cancelButtonBackground.glowWidth = 1.0
+        cancelButtonBackground.fillColor = SKColor.tableBrown
+        cancelButtonBackground.strokeColor = SKColor.bettingScreenBackground
+        cancelButtonBackground.name = "cancelButton"
+        cancelButtonBackground.zPosition = 15
+        addChild(cancelButtonBackground)
+        
+        cancelButtonText = SKLabelNode(text: "Cancel")
+        cancelButtonText.fontName = "Herborn"
+        cancelButtonText.fontSize = CGFloat(frame.width/28)
+        cancelButtonText.position = CGPoint(x: frame.width/1.25, y: frame.height/1.11)
+        cancelButtonText.name = "cancelButton"
+        cancelButtonText.zPosition = 20
+        addChild(cancelButtonText)
+        
+        
+        var gifTextures: [SKTexture] = [];
+
+            for i in 1...9 {
+                gifTextures.append(SKTexture(imageNamed: "coinFrame\(i)"));
+            }
+
+        coinImage.size = CGSize(width: frame.width/10, height: frame.width/10)
+        coinImage.position = CGPoint(x: frame.width/2, y: frame.height/1.1)
+        coinImage.zPosition = 100
+        coinImage.run(SKAction.repeatForever(SKAction.animate(with: gifTextures, timePerFrame: 0.075)))
+        addChild(coinImage)
+
+
+        
+        bettingChips()
+
     }
     
     func bettingChips()
     {
+        var bettingChipX = frame.width - frame.width + bettingX
         
+        coinBalanceLabel = SKLabelNode(text: "\(coins - betValue)")
+        coinBalanceLabel.fontName = "absender"
+        coinBalanceLabel.fontSize = CGFloat(frame.width/12)
+        coinBalanceLabel.position = CGPoint(x: frame.width/2, y: frame.height/1.20)
+        coinBalanceLabel.zPosition = 100
+        addChild(coinBalanceLabel)
+        
+        
+                
+        if coins-betValue >= 1
+        {
+            saveToUserDefaults()
+            bettingChip1 = SKSpriteNode(imageNamed: "chip1")
+            bettingChip1.size = CGSize(width: frame.width/6, height: frame.width/6)
+            bettingChip1.position = CGPoint(x: bettingChipX, y: frame.height/2.5)
+            bettingChip1.name = "1"
+            bettingChip1.zPosition = 15
+            addChild(bettingChip1)
+            if coins-betValue >= 5
+            {
+                bettingChipX += 150
+                bettingChip5 = SKSpriteNode(imageNamed: "chip5")
+                bettingChip5.size = CGSize(width: frame.width/6, height: frame.width/6)
+                bettingChip5.position = CGPoint(x: CGFloat(bettingChipX), y: frame.height/2.5)
+                bettingChip5.name = "5"
+                bettingChip5.zPosition = 16
+                addChild(bettingChip5)
+                if coins-betValue >= 10
+                {
+                    bettingChipX += 150
+                    bettingChip10 = SKSpriteNode(imageNamed: "chip10")
+                    bettingChip10.size = CGSize(width: frame.width/6, height: frame.width/6)
+                    bettingChip10.position = CGPoint(x: CGFloat(bettingChipX), y: frame.height/2.5)
+                    bettingChip10.name = "10"
+                    bettingChip10.zPosition = 17
+                    addChild(bettingChip10)
+                    if coins-betValue >= 25
+                    {
+                        bettingChipX += 150
+                        bettingChip25 = SKSpriteNode(imageNamed: "chip25")
+                        bettingChip25.size = CGSize(width: frame.width/6, height: frame.width/6)
+                        bettingChip25.position = CGPoint(x: CGFloat(bettingChipX), y: frame.height/2.5)
+                        bettingChip25.name = "25"
+                        bettingChip25.zPosition = 18
+                        addChild(bettingChip25)
+                        
+                        
+        if coins-betValue >= 50
+        {
+            bettingChipX = frame.width/5
+            bettingChip50 = SKSpriteNode(imageNamed: "chip50")
+            bettingChip50.size = CGSize(width: frame.width/6, height: frame.width/6)
+            bettingChip50.position = CGPoint(x: CGFloat(bettingChipX), y: frame.height/2.5-150)
+            bettingChip50.name = "50"
+            bettingChip50.zPosition = 19
+            addChild(bettingChip50)
+            if coins-betValue >= 100
+            {
+                bettingChipX += 150
+                bettingChip100 = SKSpriteNode(imageNamed: "chip100")
+                bettingChip100.size = CGSize(width: frame.width/6, height: frame.width/6)
+                bettingChip100.position = CGPoint(x: CGFloat(bettingChipX), y: frame.height/2.5-150)
+                bettingChip100.name = "100"
+                bettingChip100.zPosition = 20
+                addChild(bettingChip100)
+                if coins-betValue >= 250
+                {
+                    bettingChipX += 150
+                    bettingChip250 = SKSpriteNode(imageNamed: "chip250")
+                    bettingChip250.size = CGSize(width: frame.width/6, height: frame.width/6)
+                    bettingChip250.position = CGPoint(x: CGFloat(bettingChipX), y: frame.height/2.5-150)
+                    bettingChip250.name = "250"
+                    bettingChip250.zPosition = 21
+                    addChild(bettingChip250)
+                    if coins-betValue >= 500
+                    {
+                        bettingChipX += 150
+                        bettingChip500 = SKSpriteNode(imageNamed: "chip500")
+                        bettingChip500.size = CGSize(width: frame.width/6, height: frame.width/6)
+                        bettingChip500.position = CGPoint(x: CGFloat(bettingChipX), y: frame.height/2.5-150)
+                        bettingChip500.name = "500"
+                        bettingChip500.zPosition = 22
+                        addChild(bettingChip500)
+
+                    }
+
+                }
+            }
+        }
+                    }
+                }
+            }
+        }
     }
     
     
@@ -180,7 +351,6 @@ class BlackjackGame: SKScene
         firstDealerCard.position = CGPoint(x: frame.width/1.3, y: frame.height/1.235)
         addChild(firstDealerCard)
         
-        firstDealerCard.flipWithOutAnimation() //Flips the card to not be seen
         
         firstDealerCard.run(SKAction.scale(to: CGSize(width: frame.width/4, height: frame.width/2.909), duration: 1))
         firstDealerCard.run(SKAction.move(to: CGPoint(x: playerCardX, y: frame.height/1.195), duration: 1))
@@ -198,7 +368,6 @@ class BlackjackGame: SKScene
         let playerCardX = frame.width - frame.width + playerCount //Setting x value
         let card = randomCard() //Getting random card
         card.zPosition += CGFloat(count2) //Sets cards z position
-        card.flipWithOutAnimation() //Flips card for back
         card.size = CGSize(width: frame.width/4.88, height: frame.width/3.55)
         card.position = CGPoint(x: frame.width/1.3, y: frame.height/1.235)
         addChild(card)
@@ -236,7 +405,6 @@ class BlackjackGame: SKScene
         let playerCardX = frame.width - frame.width + dealerCount
         let card = randomCard()
         card.zPosition += CGFloat(count2)
-        card.flipWithOutAnimation()
         card.size = CGSize(width: frame.width/4.88, height: frame.width/3.55)
         card.position = CGPoint(x: frame.width/1.3, y: frame.height/1.235)
         addChild(card)
@@ -544,6 +712,325 @@ class BlackjackGame: SKScene
                     gameScene?.scaleMode = .aspectFill
                     self.view?.presentScene(gameScene!, transition: SKTransition.fade(withDuration: 1))
                 }
+            
+            
+            
+            
+                //Bet Screen Code -----------------------------------------------------------------
+            else if touchedNode.name == "1"
+                {
+                    let copiedNode = bettingChip1.copy() as! SKSpriteNode
+                    copiedNode.run(SKAction.move(to: CGPoint(x: frame.width/4+chipPositionX, y: frame.height/1.8+chipPositionY), duration: 1))
+                    copiedNode.zPosition = chipPositionZ
+                    betValue += 1
+                    removeChildren(in: [bettingChip1, bettingChip5, bettingChip10, bettingChip25, bettingChip50, bettingChip100, bettingChip250, bettingChip500, coinBalanceLabel])
+                    bettingChips()
+                    copiedNodes.append(copiedNode)
+                        if frame.height/1.8 + chipPositionY <= frame.height/1.5
+                        {
+                            chipPositionY += 25
+                            chipPositionZ += 1
+                        }else if frame.width/4 + chipPositionX < frame.width/1.5
+                        {
+                            chipPositionX += 130
+                            chipPositionY = 25
+                            chipPositionZ += 1
+                        }else
+                        {
+                            bettingChip1.name = ""
+                            bettingChip5.name = ""
+                            bettingChip10.name = ""
+                            bettingChip25.name = ""
+                            bettingChip50.name = ""
+                            bettingChip100.name = ""
+                            bettingChip250.name = ""
+                            bettingChip500.name = ""
+                        }
+                    copiedNode.name = ""
+                    addChild(copiedNode)
+                
+                }else if touchedNode.name == "5"
+                {
+                    let copiedNode = bettingChip5.copy() as! SKSpriteNode
+                    copiedNode.run(SKAction.move(to: CGPoint(x: frame.width/4+chipPositionX, y: frame.height/1.8+chipPositionY), duration: 1))
+                    copiedNode.zPosition = chipPositionZ
+                    betValue += 5
+                    copiedNodes.append(copiedNode)
+                    removeChildren(in: [bettingChip1, bettingChip5, bettingChip10, bettingChip25, bettingChip50, bettingChip100, bettingChip250, bettingChip500, coinBalanceLabel])
+                    bettingChips()
+                        if frame.height/1.8 + chipPositionY <= frame.height/1.5
+                        {
+                            chipPositionY += 25
+                            chipPositionZ += 1
+                        }else if frame.width/4 + chipPositionX < frame.width/1.5
+                        {
+                            chipPositionX += 130
+                            chipPositionY = 25
+                            chipPositionZ += 1
+                        }else
+                        {
+                            bettingChip1.name = ""
+                            bettingChip5.name = ""
+                            bettingChip10.name = ""
+                            bettingChip25.name = ""
+                            bettingChip50.name = ""
+                            bettingChip100.name = ""
+                            bettingChip250.name = ""
+                            bettingChip500.name = ""
+                        }
+                    copiedNode.name = ""
+                    addChild(copiedNode)
+                    
+                }else if touchedNode.name == "10"
+                {
+                    let copiedNode = bettingChip10.copy() as! SKSpriteNode
+                    copiedNode.run(SKAction.move(to: CGPoint(x: frame.width/4+chipPositionX, y: frame.height/1.8+chipPositionY), duration: 1))
+                    copiedNode.zPosition = chipPositionZ
+                    betValue += 10
+                    copiedNodes.append(copiedNode)
+                    removeChildren(in: [bettingChip1, bettingChip5, bettingChip10, bettingChip25, bettingChip50, bettingChip100, bettingChip250, bettingChip500, coinBalanceLabel])
+                    bettingChips()
+                        if frame.height/1.8 + chipPositionY <= frame.height/1.5
+                        {
+                            chipPositionY += 25
+                            chipPositionZ += 1
+                        }else if frame.width/4 + chipPositionX < frame.width/1.5
+                        {
+                            chipPositionX += 130
+                            chipPositionY = 25
+                            chipPositionZ += 1
+                        }else
+                        {
+                            bettingChip1.name = ""
+                            bettingChip5.name = ""
+                            bettingChip10.name = ""
+                            bettingChip25.name = ""
+                            bettingChip50.name = ""
+                            bettingChip100.name = ""
+                            bettingChip250.name = ""
+                            bettingChip500.name = ""
+                        }
+                    copiedNode.name = ""
+                    addChild(copiedNode)
+                    
+                }else if touchedNode.name == "25"
+                {
+                    let copiedNode = bettingChip25.copy() as! SKSpriteNode
+                    copiedNode.run(SKAction.move(to: CGPoint(x: frame.width/4+chipPositionX, y: frame.height/1.8+chipPositionY), duration: 1))
+                    copiedNode.zPosition = chipPositionZ
+                    betValue += 25
+                    copiedNodes.append(copiedNode)
+                    removeChildren(in: [bettingChip1, bettingChip5, bettingChip10, bettingChip25, bettingChip50, bettingChip100, bettingChip250, bettingChip500, coinBalanceLabel])
+                    bettingChips()
+                        if frame.height/1.8 + chipPositionY <= frame.height/1.5
+                        {
+                            chipPositionY += 25
+                            chipPositionZ += 1
+                        }else if frame.width/4 + chipPositionX < frame.width/1.5
+                        {
+                            chipPositionX += 130
+                            chipPositionY = 25
+                            chipPositionZ += 1
+                        }else
+                        {
+                            bettingChip1.name = ""
+                            bettingChip5.name = ""
+                            bettingChip10.name = ""
+                            bettingChip25.name = ""
+                            bettingChip50.name = ""
+                            bettingChip100.name = ""
+                            bettingChip250.name = ""
+                            bettingChip500.name = ""
+                        }
+                    copiedNode.name = ""
+                    addChild(copiedNode)
+                    
+                }else if touchedNode.name == "50"
+                {
+                    let copiedNode = bettingChip50.copy() as! SKSpriteNode
+                    copiedNode.run(SKAction.move(to: CGPoint(x: frame.width/4+chipPositionX, y: frame.height/1.8+chipPositionY), duration: 1))
+                    copiedNode.zPosition = chipPositionZ
+                    betValue += 50
+                    copiedNodes.append(copiedNode)
+                    removeChildren(in: [bettingChip1, bettingChip5, bettingChip10, bettingChip25, bettingChip50, bettingChip100, bettingChip250, bettingChip500, coinBalanceLabel])
+                    bettingChips()
+                        if frame.height/1.8 + chipPositionY <= frame.height/1.5
+                        {
+                            chipPositionY += 25
+                            chipPositionZ += 1
+                        }else if frame.width/4 + chipPositionX < frame.width/1.5
+                        {
+                            chipPositionX += 130
+                            chipPositionY = 25
+                            chipPositionZ += 1
+                        }else
+                        {
+                            bettingChip1.name = ""
+                            bettingChip5.name = ""
+                            bettingChip10.name = ""
+                            bettingChip25.name = ""
+                            bettingChip50.name = ""
+                            bettingChip100.name = ""
+                            bettingChip250.name = ""
+                            bettingChip500.name = ""
+                        }
+                    copiedNode.name = ""
+                    addChild(copiedNode)
+                    
+                }else if touchedNode.name == "100"
+                {
+                    let copiedNode = bettingChip100.copy() as! SKSpriteNode
+                    copiedNode.run(SKAction.move(to: CGPoint(x: frame.width/4+chipPositionX, y: frame.height/1.8+chipPositionY), duration: 1))
+                    copiedNode.zPosition = chipPositionZ
+                    betValue += 100
+                    copiedNodes.append(copiedNode)
+                    removeChildren(in: [bettingChip1, bettingChip5, bettingChip10, bettingChip25, bettingChip50, bettingChip100, bettingChip250, bettingChip500, coinBalanceLabel])
+                    bettingChips()
+                        if frame.height/1.8 + chipPositionY <= frame.height/1.5
+                        {
+                            chipPositionY += 25
+                            chipPositionZ += 1
+                        }else if frame.width/4 + chipPositionX < frame.width/1.5
+                        {
+                            chipPositionX += 130
+                            chipPositionY = 25
+                            chipPositionZ += 1
+                        }else
+                        {
+                            bettingChip1.name = ""
+                            bettingChip5.name = ""
+                            bettingChip10.name = ""
+                            bettingChip25.name = ""
+                            bettingChip50.name = ""
+                            bettingChip100.name = ""
+                            bettingChip250.name = ""
+                            bettingChip500.name = ""
+                        }
+                    copiedNode.name = ""
+                    addChild(copiedNode)
+                    
+                }else if touchedNode.name == "250"
+                {
+                    let copiedNode = bettingChip250.copy() as! SKSpriteNode
+                    copiedNode.run(SKAction.move(to: CGPoint(x: frame.width/4+chipPositionX, y: frame.height/1.8+chipPositionY), duration: 1))
+                    copiedNode.zPosition = chipPositionZ
+                    betValue += 250
+                    copiedNodes.append(copiedNode)
+                    removeChildren(in: [bettingChip1, bettingChip5, bettingChip10, bettingChip25, bettingChip50, bettingChip100, bettingChip250, bettingChip500, coinBalanceLabel])
+                    bettingChips()
+                        if frame.height/1.8 + chipPositionY <= frame.height/1.5
+                        {
+                            chipPositionY += 25
+                            chipPositionZ += 1
+                        }else if frame.width/4 + chipPositionX < frame.width/1.5
+                        {
+                            chipPositionX += 130
+                            chipPositionY = 25
+                            chipPositionZ += 1
+                        }else
+                        {
+                            bettingChip1.name = ""
+                            bettingChip5.name = ""
+                            bettingChip10.name = ""
+                            bettingChip25.name = ""
+                            bettingChip50.name = ""
+                            bettingChip100.name = ""
+                            bettingChip250.name = ""
+                            bettingChip500.name = ""
+                        }
+                    copiedNode.name = ""
+                    addChild(copiedNode)
+                    
+                }else if touchedNode.name == "500"
+                {
+                        let copiedNode = bettingChip500.copy() as! SKSpriteNode
+                        copiedNode.run(SKAction.move(to: CGPoint(x: frame.width/4+chipPositionX, y: frame.height/1.8+chipPositionY), duration: 1))
+                        copiedNode.zPosition = chipPositionZ
+                        betValue += 500
+                        copiedNodes.append(copiedNode)
+                        removeChildren(in: [bettingChip1, bettingChip5, bettingChip10, bettingChip25, bettingChip50, bettingChip100, bettingChip250, bettingChip500, coinBalanceLabel])
+                        bettingChips()
+                            if frame.height/1.8 + chipPositionY <= frame.height/1.5
+                            {
+                                chipPositionY += 25
+                                chipPositionZ += 1
+                            }else if frame.width/4 + chipPositionX < frame.width/1.5
+                            {
+                                chipPositionX += 130
+                                chipPositionY = 25
+                                chipPositionZ += 1
+                            }else
+                            {
+                                bettingChip1.name = ""
+                                bettingChip5.name = ""
+                                bettingChip10.name = ""
+                                bettingChip25.name = ""
+                                bettingChip50.name = ""
+                                bettingChip100.name = ""
+                                bettingChip250.name = ""
+                                bettingChip500.name = ""
+                            }
+                        copiedNode.name = ""
+                        addChild(copiedNode)
+                }else if touchedNode.name == "cancelButton"
+                {
+                    for i in copiedNodes
+                    {
+                        run(SKAction.sequence([
+                            SKAction.run({
+                                i.run(SKAction.moveTo(x: 10, duration: 0.5))}
+                                        ),
+                            SKAction.wait(forDuration: 0.5),
+                            SKAction.run {
+                                i.removeFromParent()
+                            },
+                            SKAction.run { [self] in
+                                removeChildren(in: [bettingChip1, bettingChip5, bettingChip10, bettingChip25, bettingChip50, bettingChip100, bettingChip250, bettingChip500, coinBalanceLabel])
+                                betValue = 0
+                                bettingX = 150.0
+                                chipPositionY = 25.0
+                                chipPositionX = 0.0
+                                chipPositionZ = 23.0
+                                bettingChips()
+                            }]
+                        ))
+                    }
+                }else if touchedNode.name == "betButton"
+                {
+                    run(SKAction.sequence([
+                        SKAction.run { [self] in
+                            coins = coins - betValue
+                            saveToUserDefaults()
+                            chipPositionY = 25.0
+                            chipPositionX = 0.0
+                            chipPositionZ = 23.0
+                            removeAllChildren()
+                        },
+                        SKAction.run(createBackground),
+                        SKAction.run { [self] in
+                            var chipCount = 0
+                            for i in copiedNodes
+                            {
+                                let copiedNode = i.copy() as! SKSpriteNode
+                                copiedNode.position = CGPoint(x: frame.width/4+chipPositionX, y: frame.height/1.8+chipPositionY)
+                                copiedNode.name = ""
+                                addChild(copiedNode)
+                                chipPositionY += 25
+                                chipPositionZ += 1
+                            }
+                        },
+                        SKAction.run(dealerStartingDraw),
+                        SKAction.wait(forDuration: 1.5),
+                        SKAction.run(playerDraws),
+                        SKAction.wait(forDuration: 1.5),
+                        SKAction.run(dealerDraws),
+                        SKAction.wait(forDuration: 1.5),
+                        SKAction.run(playerDraws),
+                        SKAction.run(playerCheck)
+                        ]))
+
+                }
+
             }
         }
     
@@ -600,184 +1087,7 @@ class BlackjackGame: SKScene
             print(playerCards)
         }
     
-        
-        var card = Card(cardType: .eight, cardSuit: .heart, cardBack: .white)
-        if randomSuit == 0
-        {
-            if randomValue == 1
-            {
-                card = Card(cardType: .ace, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 2
-            {
-                card = Card(cardType: .two, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 3
-            {
-                card = Card(cardType: .three, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 4
-            {
-                card = Card(cardType: .four, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 5
-            {
-                card = Card(cardType: .five, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 6
-            {
-                card = Card(cardType: .six, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 7
-            {
-                card = Card(cardType: .seven, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 8
-            {
-                card = Card(cardType: .eight, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 9
-            {
-                card = Card(cardType: .nine, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 10
-            {
-                card = Card(cardType: .ten, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 11
-            {
-                card = Card(cardType: .jester, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 12
-            {
-                card = Card(cardType: .queen, cardSuit: .heart, cardBack: .white)
-            }else if randomValue == 13
-            {
-                card = Card(cardType: .king, cardSuit: .heart, cardBack: .white)
-            }
-        }
-        
-        else if randomSuit == 1
-        {
-            if randomValue == 1
-            {
-                card = Card(cardType: .ace, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 2
-            {
-                card = Card(cardType: .two, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 3
-            {
-                card = Card(cardType: .three, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 4
-            {
-                card = Card(cardType: .four, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 5
-            {
-                card = Card(cardType: .five, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 6
-            {
-                card = Card(cardType: .six, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 7
-            {
-                card = Card(cardType: .seven, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 8
-            {
-                card = Card(cardType: .eight, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 9
-            {
-                card = Card(cardType: .nine, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 10
-            {
-                card = Card(cardType: .ten, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 11
-            {
-                card = Card(cardType: .jester, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 12
-            {
-                card = Card(cardType: .queen, cardSuit: .diamond, cardBack: .white)
-            }else if randomValue == 13
-            {
-                card = Card(cardType: .king, cardSuit: .diamond, cardBack: .white)
-            }
-        }
-        
-        else if randomSuit == 2
-        {
-            if randomValue == 1
-            {
-                card = Card(cardType: .ace, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 2
-            {
-                card = Card(cardType: .two, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 3
-            {
-                card = Card(cardType: .three, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 4
-            {
-                card = Card(cardType: .four, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 5
-            {
-                card = Card(cardType: .five, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 6
-            {
-                card = Card(cardType: .six, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 7
-            {
-                card = Card(cardType: .seven, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 8
-            {
-                card = Card(cardType: .eight, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 9
-            {
-                card = Card(cardType: .nine, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 10
-            {
-                card = Card(cardType: .ten, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 11
-            {
-                card = Card(cardType: .jester, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 12
-            {
-                card = Card(cardType: .queen, cardSuit: .spade, cardBack: .white)
-            }else if randomValue == 13
-            {
-                card = Card(cardType: .king, cardSuit: .spade, cardBack: .white)
-            }
-        }
-        
-        else if randomSuit == 3
-        {
-            if randomValue == 1
-            {
-                card = Card(cardType: .ace, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 2
-            {
-                card = Card(cardType: .two, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 3
-            {
-                card = Card(cardType: .three, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 4
-            {
-                card = Card(cardType: .four, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 5
-            {
-                card = Card(cardType: .five, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 6
-            {
-                card = Card(cardType: .six, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 7
-            {
-                card = Card(cardType: .seven, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 8
-            {
-                card = Card(cardType: .eight, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 9
-            {
-                card = Card(cardType: .nine, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 10
-            {
-                card = Card(cardType: .ten, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 11
-            {
-                card = Card(cardType: .jester, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 12
-            {
-                card = Card(cardType: .queen, cardSuit: .club, cardBack: .white)
-            }else if randomValue == 13
-            {
-                card = Card(cardType: .king, cardSuit: .club, cardBack: .white)
-            }
-
-        }
+        var card = Card(cardType: CardType(rawValue: randomValue)!, cardSuit: CardSuit(rawValue: randomSuit)!, cardBack: CardBack(rawValue: 0)!)
         return card
     }
 
